@@ -7,6 +7,14 @@ description: "Benchmark comparing Opus 4.8 (end-to-end) vs orchestrated open-sou
 
 Runs a controlled experiment comparing two approaches to PM work from any codebase. Dynamically generates evaluation ground truths from the codebase itself, then scores both tracks against them.
 
+For reproducible results, use the executable harness:
+
+```bash
+python3 scripts/run_benchmark.py <codebase-path> --feature "<feature-description>"
+```
+
+The OpenCode skill describes the intended workflow. The script is the source of truth for latency, cost, and deterministic scoring.
+
 ## Invocation
 
 ```

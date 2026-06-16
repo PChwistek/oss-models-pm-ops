@@ -51,4 +51,6 @@ competitive-analyst → Step 1 (sequential) → Step 2 (parallel) → Step 3 (pa
 
 A markdown PRFAQ with sections: Press Release, Internal FAQ, Customer FAQ, Technical FAQ. All claims grounded in codebase.
 
-## Output directory: output/benchmark-[timestamp]/orchestrated/05-prfaq.md", "filePath": "/Users/philipchwistek/coding/openrouter_tests/pm-workflow-benchmark/.opencode/skills/prfaq-writer/SKILL.md"}
+## Output directory
+
+`output/benchmark-[timestamp]/orchestrated/05-prfaq.md`

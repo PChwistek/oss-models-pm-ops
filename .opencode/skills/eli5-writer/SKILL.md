@@ -42,4 +42,6 @@ Sequential (each step depends on previous), but each step is a single OpenRouter
 
 A markdown ELI5 document with: one-sentence summary, analogy, how it works, business impact, tradeoffs.
 
-## Output directory: output/benchmark-[timestamp]/orchestrated/02-eli5.md", "filePath": "/Users/philipchwistek/coding/openrouter_tests/pm-workflow-benchmark/.opencode/skills/eli5-writer/SKILL.md"}
+## Output directory
+
+`output/benchmark-[timestamp]/orchestrated/03-eli5.md`

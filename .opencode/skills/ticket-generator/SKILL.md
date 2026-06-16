@@ -49,4 +49,6 @@ Step 1 (sequential) → Step 2 (parallel OpenRouter calls) → Step 3 (parallel 
 
 Structured tickets (3-7) each with: title, area/file ref, technical context from codebase, acceptance criteria, dependencies, complexity. All tickets reference real files.
 
-## Output directory: output/benchmark-[timestamp]/orchestrated/03-tickets.md", "filePath": "/Users/philipchwistek/coding/openrouter_tests/pm-workflow-benchmark/.opencode/skills/ticket-generator/SKILL.md"}
+## Output directory
+
+`output/benchmark-[timestamp]/orchestrated/04-tickets.md`

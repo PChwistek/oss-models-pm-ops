@@ -46,4 +46,6 @@ Use bash+curl to call OpenRouter API for parallel file reads. Collect results, t
 
 A structured report covering: architecture pattern, data flow, key modules, tech stack, test coverage, risks.
 
-## Output directory structure: output/benchmark-[timestamp]/orchestrated/01-codebase-review.md", "filePath": "/Users/philipchwistek/coding/openrouter_tests/pm-workflow-benchmark/.opencode/skills/codebase-reviewer/SKILL.md"}
+## Output directory
+
+`output/benchmark-[timestamp]/orchestrated/01-codebase-review.md`
