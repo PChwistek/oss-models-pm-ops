@@ -7,7 +7,7 @@ It compares two approaches:
 - **Control:** `anthropic/claude-opus-4.8` handles each PM task end-to-end.
 - **Experiment:** an orchestrated workflow routes subtasks to open-source models via OpenRouter.
 
-The goal is not to ship a production PM tool yet. The goal is to generate a useful, reproducible article about when orchestrated open-source models are good enough for product-management work, and where they still fall short.
+The goal is not to ship a production PM tool yet. The goal is to run a useful, reproducible experiment about when orchestrated open-source models are good enough for product-management work, and where they still fall short.
 
 ## Why This Exists
 
@@ -42,7 +42,7 @@ The benchmark runs five PM tasks against a target codebase:
 | Cheap parallel worker | `qwen/qwen3-8b` |
 | Judge | `openai/gpt-5.5` |
 
-Prices are snapshotted in `scripts/run_benchmark.py` and should be refreshed from OpenRouter before publishing final numbers.
+Prices are snapshotted in `scripts/run_benchmark.py` and should be refreshed from OpenRouter before reporting final numbers.
 
 ## How The Harness Works
 
@@ -62,7 +62,7 @@ It then runs both tracks and writes:
 - `deterministic-scores.json` — file/tech/route/schema grounding checks
 - `cost-latency.md` — token usage, estimated cost, and latency for every model call
 - `judge-feedback.md` — optional GPT-5.5 blind judging
-- `comparison-table.md` — article-ready summary
+- `comparison-table.md` — summary table for comparing runs
 
 ## Usage
 
@@ -100,7 +100,7 @@ python3 scripts/run_benchmark.py /path/to/codebase \
 
 ### 3. Run the full benchmark with GPT-5.5 judging
 
-Use this for article-ready results after you are confident the prompt, feature, competitors, and codebase path are right.
+Use this for the complete experiment after you are confident the prompt, feature, competitors, and codebase path are right.
 
 ```bash
 export OPENROUTER_API_KEY="sk-or-..."
@@ -150,7 +150,7 @@ Each run writes a timestamped folder under `output/`. The important files are:
 | `deterministic-scores.json` | Auto-scored grounding checks |
 | `cost-latency.md` | Per-call model, latency, token usage, and estimated cost |
 | `judge-feedback.md` | GPT-5.5 blind judge feedback if judge was enabled |
-| `comparison-table.md` | Summary table for article drafting |
+| `comparison-table.md` | Summary table for comparing runs |
 | `run-metadata.json` | Feature, codebase path, competitors, models, price snapshot |
 
 Recommended review order:
@@ -159,13 +159,13 @@ Recommended review order:
 2. Read `control/01-codebase-review.md` and `orchestrated/01-codebase-review.md` side by side.
 3. Check `cost-latency.md` for actual latency and cost deltas.
 4. Review `deterministic-scores.json` for fake file references and missed grounding.
-5. Add your own human review notes before turning the run into article claims.
+5. Add your own human review notes before drawing conclusions from the run.
 
 ## Reproducibility Notes
 
 - Every run creates a new timestamped output directory.
 - Model outputs are stochastic, so expect some variation between runs.
-- Prices in the script are a snapshot; refresh them from OpenRouter before publishing exact cost claims.
+- Prices in the script are a snapshot; refresh them from OpenRouter before reporting exact cost claims.
 - `OPENROUTER_API_KEY` is read from the environment and should never be committed.
 - Generated benchmark outputs are ignored by git via `output/benchmark-*/`.
 
@@ -180,18 +180,14 @@ This repo also includes OpenCode skills and agents that describe the intended wo
 - `.opencode/agents/ticket-engineer.md`
 - `.opencode/agents/prfaq-writer.md`
 
-The benchmark script is the reproducible path. The OpenCode assets are the product-design layer and a prototype of what a native task-governance workflow could look like.
+The benchmark script is the reproducible path. The OpenCode assets are workflow-design notes for the orchestration experiment.
 
-## Article Angle
+## Experiment Notes
 
-A useful article should not claim open-source models are universally better. It should show the tradeoff honestly:
-
-> I tested Opus 4.8 against an orchestrated open-source PM workflow on a real codebase. Here is what matched, what failed, how much latency changed, and what OpenRouter could productize as a governance layer.
-
-The most valuable output is not a perfect benchmark. It is the combination of:
+This experiment should not assume open-source models are universally better. It should show the tradeoff honestly:
 
 - Real model outputs
 - Latency and cost measurements
 - Deterministic grounding checks
 - Human review notes
-- A concrete product proposal for OpenRouter
+- Clear failure modes and open questions
