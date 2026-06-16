@@ -66,7 +66,9 @@ It then runs both tracks and writes:
 
 ## Usage
 
-Dry run without API calls:
+### 1. Dry run without API calls
+
+Use this first to verify the harness can inspect the target codebase and generate the expected output structure without spending any tokens.
 
 ```bash
 python3 scripts/run_benchmark.py /path/to/codebase \
@@ -75,7 +77,30 @@ python3 scripts/run_benchmark.py /path/to/codebase \
   --skip-judge
 ```
 
-Run against OpenRouter:
+This writes a timestamped output directory like:
+
+```text
+output/benchmark-20260616-042204/
+```
+
+The dry run should produce `ground-truth.json`, `codebase-context.md`, placeholder model outputs, and cost/latency estimates based on prompt sizes.
+
+### 2. Run the benchmark without the GPT-5.5 judge
+
+Use this when you want real model outputs and latency/cost measurements, but do not want to spend on the judge yet.
+
+```bash
+export OPENROUTER_API_KEY="sk-or-..."
+
+python3 scripts/run_benchmark.py /path/to/codebase \
+  --feature "AI-powered meal planning" \
+  --competitors "Paprika,Mealime,Yummly,Copy Me That" \
+  --skip-judge
+```
+
+### 3. Run the full benchmark with GPT-5.5 judging
+
+Use this for article-ready results after you are confident the prompt, feature, competitors, and codebase path are right.
 
 ```bash
 export OPENROUTER_API_KEY="sk-or-..."
@@ -86,6 +111,63 @@ python3 scripts/run_benchmark.py /path/to/codebase \
 ```
 
 Outputs are written to `output/benchmark-<timestamp>/`.
+
+### 4. Re-run with a different feature
+
+The codebase path and feature are independent. To test a different PM workflow, keep the same codebase and change `--feature`:
+
+```bash
+python3 scripts/run_benchmark.py /path/to/codebase \
+  --feature "Add team workspaces and role-based access control" \
+  --competitors "Notion,Airtable,Coda" \
+  --skip-judge
+```
+
+### 5. Re-run with more or less code context
+
+If the codebase is large, tune how many files and bytes per file are included in model prompts:
+
+```bash
+python3 scripts/run_benchmark.py /path/to/codebase \
+  --feature "AI-powered meal planning" \
+  --max-files 40 \
+  --max-file-bytes 16000 \
+  --skip-judge
+```
+
+The deterministic ground-truth extraction scans broadly for routes and schemas even when prompt context is capped.
+
+## Output Review
+
+Each run writes a timestamped folder under `output/`. The important files are:
+
+| File | Purpose |
+|---|---|
+| `ground-truth.json` | Codebase-derived eval facts: tech stack, routes, schemas, files |
+| `codebase-context.md` | Exact context sent into model prompts |
+| `control/*.md` | Opus 4.8 outputs for each PM task |
+| `orchestrated/*.md` | Open-source orchestration outputs for each PM task |
+| `deterministic-scores.json` | Auto-scored grounding checks |
+| `cost-latency.md` | Per-call model, latency, token usage, and estimated cost |
+| `judge-feedback.md` | GPT-5.5 blind judge feedback if judge was enabled |
+| `comparison-table.md` | Summary table for article drafting |
+| `run-metadata.json` | Feature, codebase path, competitors, models, price snapshot |
+
+Recommended review order:
+
+1. Open `ground-truth.json` and correct any obvious missed facts in your notes.
+2. Read `control/01-codebase-review.md` and `orchestrated/01-codebase-review.md` side by side.
+3. Check `cost-latency.md` for actual latency and cost deltas.
+4. Review `deterministic-scores.json` for fake file references and missed grounding.
+5. Add your own human review notes before turning the run into article claims.
+
+## Reproducibility Notes
+
+- Every run creates a new timestamped output directory.
+- Model outputs are stochastic, so expect some variation between runs.
+- Prices in the script are a snapshot; refresh them from OpenRouter before publishing exact cost claims.
+- `OPENROUTER_API_KEY` is read from the environment and should never be committed.
+- Generated benchmark outputs are ignored by git via `output/benchmark-*/`.
 
 ## OpenCode Assets
 
