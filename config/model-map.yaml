@@ -1,0 +1,45 @@
+# Model assignments for PM workflow orchestration
+# Each task type maps to the most appropriate open-source model.
+# The orchestrator delegates subtasks to these models via OpenRouter API.
+
+codebase_review:
+  model: qwen/qwen3-coder-flash
+  provider: openrouter
+  purpose: "Read and summarize codebase structure, data flow, architecture"
+  notes: "1M context, best open model for code understanding"
+
+analysis_synthesis:
+  model: deepseek/deepseek-v4-flash
+  provider: openrouter
+  purpose: "Planning, risk analysis, quality review, synthesis"
+  notes: "Strong reasoning at 1/50th the cost of frontier models"
+
+drafting:
+  model: qwen/qwen3-30b-a3b
+  provider: openrouter
+  purpose: "ELI5 explanations, structured document generation"
+  notes: "Good quality-to-price ratio for text generation"
+
+cheap_worker:
+  model: qwen/qwen3-8b
+  provider: openrouter
+  purpose: "Simple subtasks, parallel generation (FAQs, ticket drafts)"
+  notes: "Cheapest usable model for bulk work"
+
+orchestrator:
+  model: deepseek/deepseek-v4-flash
+  provider: openrouter
+  purpose: "Plans the workflow, delegates to sub-agents, synthesizes final output"
+  notes: "Fast enough to be interactive, smart enough to coordinate"
+
+# Control group (end-to-end single model)
+control:
+  model: anthropic/claude-opus-4.8
+  provider: openrouter
+  purpose: "Benchmark baseline — does all tasks end-to-end"
+
+# Judge for eval comparisons
+judge:
+  model: openai/gpt-5.5
+  provider: openrouter
+  purpose: "Blind evaluation of output quality across all criteria"
