@@ -32,8 +32,8 @@ from typing import Any
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 MODELS = {
-    "control": "anthropic/claude-opus-4.8",
-    "judge": "openai/gpt-5.5",
+    "control": "openai/gpt-5.5",
+    "judge": "anthropic/claude-opus-4.8",
     "orchestrator": "deepseek/deepseek-v4-flash",
     "code": "qwen/qwen3-coder-flash",
     "drafting": "qwen/qwen3-30b-a3b",

@@ -51,4 +51,4 @@ Check each sub-agent's output for quality. Synthesize into the final deliverable
 - `/eli5 <feature>` — Explain a feature in plain English
 - `/tickets <feature>` — Generate tickets from code context
 - `/prfaq <feature>` — Write a PRFAQ for a feature
-- `/benchmark <path>` — Run the full benchmark (control vs orchestrated)
+- `/benchmark <path>` — Run the full benchmark (GPT-5.5 control vs orchestrated, Opus 4.8 judge)

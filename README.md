@@ -4,7 +4,7 @@
 
 It compares two approaches:
 
-- **Control:** `anthropic/claude-opus-4.8` handles each PM task end-to-end.
+- **Control:** `openai/gpt-5.5` handles each PM task end-to-end.
 - **Experiment:** an orchestrated workflow routes subtasks to open-source models via OpenRouter.
 
 The goal is not to ship a production PM tool yet. The goal is to run a useful, reproducible experiment about when orchestrated open-source models are good enough for product-management work, and where they still fall short.
@@ -34,13 +34,13 @@ The benchmark runs five PM tasks against a target codebase:
 ## Model Map
 
 | Role | Model |
-|---|---|
-| Control | `anthropic/claude-opus-4.8` |
+|---|---|---|
+| Control | `openai/gpt-5.5` |
 | Orchestrator / synthesis | `deepseek/deepseek-v4-flash` |
 | Code understanding | `qwen/qwen3-coder-flash` |
 | Drafting / explanation | `qwen/qwen3-30b-a3b` |
 | Cheap parallel worker | `qwen/qwen3-8b` |
-| Judge | `openai/gpt-5.5` |
+| Judge | `anthropic/claude-opus-4.8` |
 
 Prices are snapshotted in `scripts/run_benchmark.py` and should be refreshed from OpenRouter before reporting final numbers.
 

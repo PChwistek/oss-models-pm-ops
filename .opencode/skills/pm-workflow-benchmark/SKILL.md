@@ -1,6 +1,6 @@
 ---
 name: pm-workflow-benchmark
-description: "Benchmark comparing Opus 4.8 (end-to-end) vs orchestrated open-source models on PM tasks. Dynamically generates eval ground truths from any codebase. Uses GPT-5.5 as blind judge."
+description: "Benchmark comparing GPT-5.5 (end-to-end) vs orchestrated open-source models on PM tasks. Dynamically generates eval ground truths from any codebase. Uses Claude Opus 4.8 as blind judge."
 ---
 
 # PM Workflow Benchmark
@@ -57,14 +57,14 @@ Before the benchmark runs, the system analyzes the target codebase to generate g
 }
 ```
 
-### Phase 1: Run control track (Opus 4.8)
+### Phase 1: Run control track (GPT-5.5)
 
 ```
-Task 1: Codebase Review  → Single Opus 4.8 call: "Analyze this codebase"
-Task 2: Competitive Research  → Single Opus 4.8 call: "Research competitors for [feature]"
-Task 3: ELI5             → Single Opus 4.8 call: "Explain [feature] in plain English"
-Task 4: Tickets          → Single Opus 4.8 call: "Generate tickets for [feature]"
-Task 5: PRFAQ            → Single Opus 4.8 call: "Write a PRFAQ for [feature]"
+Task 1: Codebase Review  → Single GPT-5.5 call: "Analyze this codebase"
+Task 2: Competitive Research  → Single GPT-5.5 call: "Research competitors for [feature]"
+Task 3: ELI5             → Single GPT-5.5 call: "Explain [feature] in plain English"
+Task 4: Tickets          → Single GPT-5.5 call: "Generate tickets for [feature]"
+Task 5: PRFAQ            → Single GPT-5.5 call: "Write a PRFAQ for [feature]"
 ```
 
 ### Phase 2: Run orchestrated track (open-source models)
@@ -90,7 +90,7 @@ Two scoring layers:
 | Route/model accuracy | Are described endpoints and schemas real? |
 | Hallucination count | How many non-existent files, APIs, or features? |
 
-**B) Subjective rubric** (GPT-5.5 blind judge):
+**B) Subjective rubric** (Opus 4.8 blind judge):
 
 | Criterion | Weight | Definition |
 |---|---|---|
@@ -126,7 +126,7 @@ output/benchmark-<timestamp>/
 
 ```
 +--------------------+---------+--------------+----------+
-| Criterion          | Opus 4.8 | Orchestrated | Delta    |
+| Criterion          | GPT-5.5 | Orchestrated | Delta    |
 +--------------------+---------+--------------+----------+
 | Technical accuracy | 94      | 86           | -8       |
 | Actionability      | 91      | 83           | -8       |
